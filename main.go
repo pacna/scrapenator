@@ -3,10 +3,12 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
 func main() {
@@ -16,22 +18,33 @@ func main() {
 	for scanner.Scan() {
 		url, err := url.ParseRequestURI(scanner.Text())
 		if err != nil {
-			panic(err)
+			log.Fatal("Invalid url")
 		}
 
 		response, err := http.Get(url.String())
 
 		if err != nil {
-			panic(err)
+			log.Fatal("Invalid request")
 		}
 
 		defer response.Body.Close()
-		var content []byte
 
-		if content, err = ioutil.ReadAll(response.Body); err != nil {
-			panic(err)
+		if response.StatusCode != http.StatusOK {
+			log.Fatal("Status is not returning a success code", response.StatusCode, response.Status)
 		}
 
-		fmt.Println("Url", string(content))
+		document, err := goquery.NewDocumentFromReader(response.Body)
+
+		if err != nil {
+			log.Fatal("no html content")
+		}
+
+		document.Find("img").Each(func(index int, imgContent *goquery.Selection) {
+			imgSrc, isSrcEmpty := imgContent.Attr("src")
+
+			if isSrcEmpty {
+				fmt.Println(imgSrc)
+			}
+		})
 	}
 }
