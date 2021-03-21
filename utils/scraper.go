@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"io"
 	"log"
 	"strings"
@@ -9,7 +8,10 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-func Scrape(body io.Reader) {
+func Scrape(body io.Reader) []string {
+	var uniqueImgUrls map[string]bool = make(map[string]bool)
+	var imgUrls []string
+
 	document, err := goquery.NewDocumentFromReader(body)
 
 	if err != nil {
@@ -21,13 +23,19 @@ func Scrape(body io.Reader) {
 		dataImgSrc, isDataSrcEmpty := imgContent.Attr("data-src")
 
 		if isSrcEmpty {
-			fmt.Println(imgSrc, index)
+			uniqueImgUrls[imgSrc] = true
 		}
 
 		if isDataSrcEmpty {
-			fmt.Println(dataImgSrc, index)
+			uniqueImgUrls[dataImgSrc] = true
 		}
 	})
+
+	for imgUrl := range uniqueImgUrls {
+		imgUrls = append(imgUrls, imgUrl)
+	}
+
+	return imgUrls
 }
 
 func UpdateUrl(userInput string) string {

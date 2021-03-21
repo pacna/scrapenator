@@ -34,6 +34,8 @@ func main() {
 			log.Fatal("Status is not returning a success code", response.StatusCode, response.Status)
 		}
 
-		utils.Scrape(response.Body)
+		imgUrls := utils.Scrape(response.Body)
+
+		fmt.Println(imgUrls)
 	}
 }
