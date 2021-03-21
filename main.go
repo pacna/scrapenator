@@ -3,20 +3,21 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"go-image-extractor/utils"
 	"log"
 	"net/http"
 	"net/url"
 	"os"
-
-	"github.com/PuerkitoBio/goquery"
 )
 
 func main() {
-	fmt.Println("Enter url")
+	fmt.Print("Enter url ")
 	scanner := bufio.NewScanner(os.Stdin)
-
 	for scanner.Scan() {
-		url, err := url.ParseRequestURI(scanner.Text())
+		updatedUrl := utils.UpdateUrl(scanner.Text())
+
+		url, err := url.ParseRequestURI(updatedUrl)
+
 		if err != nil {
 			log.Fatal("Invalid url")
 		}
@@ -33,18 +34,6 @@ func main() {
 			log.Fatal("Status is not returning a success code", response.StatusCode, response.Status)
 		}
 
-		document, err := goquery.NewDocumentFromReader(response.Body)
-
-		if err != nil {
-			log.Fatal("no html content")
-		}
-
-		document.Find("img").Each(func(index int, imgContent *goquery.Selection) {
-			imgSrc, isSrcEmpty := imgContent.Attr("src")
-
-			if isSrcEmpty {
-				fmt.Println(imgSrc)
-			}
-		})
+		utils.Scrape(response.Body)
 	}
 }
