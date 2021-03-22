@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"go-image-extractor/utils"
+	"go-image-scraper/utils"
 	"log"
 	"net/http"
 	"net/url"

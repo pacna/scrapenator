@@ -1,3 +1,3 @@
-# GO Image Extractor
+# GO Image Scraper
 
-Extract image contents based on the url you give it.
+Scrape images off from websites.

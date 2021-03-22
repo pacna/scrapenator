@@ -1,4 +1,4 @@
-module go-image-extractor
+module go-image-scraper
 
 go 1.15
 
