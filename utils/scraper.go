@@ -8,6 +8,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
+// Scrape -- scapes img urls from html document
 func Scrape(body io.Reader) []string {
 	var uniqueImgUrls map[string]bool = make(map[string]bool)
 	var imgUrls []string
@@ -31,15 +32,16 @@ func Scrape(body io.Reader) []string {
 		}
 	})
 
-	for imgUrl := range uniqueImgUrls {
-		imgUrls = append(imgUrls, imgUrl)
+	for imgURL := range uniqueImgUrls {
+		imgUrls = append(imgUrls, imgURL)
 	}
 
 	return imgUrls
 }
 
-func UpdateUrl(userInput string) string {
-	var updatedUrl string
+// UpdateURL -- updates the user input if it does not have the minimum requirement of a url
+func UpdateURL(userInput string) string {
+	var updatedURL string
 
 	urlSegments := strings.Split(userInput, ".")
 
@@ -54,7 +56,12 @@ func UpdateUrl(userInput string) string {
 
 	}
 
-	updatedUrl = strings.Join(urlSegments, ".")
+	updatedURL = strings.Join(urlSegments, ".")
 
-	return updatedUrl
+	return updatedURL
+}
+
+// CreateImage -- creates an image
+func CreateImage(imgUrls []string) {
+
 }
