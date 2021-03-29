@@ -6,8 +6,9 @@ import (
 	"go-image-scraper/utils"
 	"log"
 	"net/http"
-	"net/url"
 	"os"
+
+	"github.com/asaskevich/govalidator"
 )
 
 func main() {
@@ -16,13 +17,11 @@ func main() {
 	for scanner.Scan() {
 		updatedURL := utils.UpdateURL(scanner.Text())
 
-		url, err := url.ParseRequestURI(updatedURL)
-
-		if err != nil {
-			log.Fatal("Invalid url")
+		if !govalidator.IsURL(updatedURL) {
+			log.Fatal("Invalid url", updatedURL)
 		}
 
-		response, err := http.Get(url.String())
+		response, err := http.Get(updatedURL)
 
 		if err != nil {
 			log.Fatal("Invalid request")
@@ -34,18 +33,10 @@ func main() {
 			log.Fatal("Status is not returning a success code", response.StatusCode, response.Status)
 		}
 
-		imgUrls := utils.Scrape(response.Body)
+		imgUrls := utils.Scrape(updatedURL, response.Body)
+
+		// utils.CreateImage(imgUrls)
 
 		fmt.Println(imgUrls)
-
-		// file, err := os.Create("temp.png")
-
-		// if err != nil {
-		// 	log.Fatal(err)
-		// }
-
-		// defer file.Close()
-
-		// _, err := io.Copy(file, &imgUrls[0])
 	}
 }
