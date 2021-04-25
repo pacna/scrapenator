@@ -18,8 +18,8 @@ import (
 )
 
 func scrape(updatedURL string, body io.Reader) []string {
-	var uniqueImgUrls map[string]bool = make(map[string]bool)
-	var imgUrls []string
+	var uniqueImgURLs map[string]bool = make(map[string]bool)
+	var imgURLs []string
 
 	document, err := goquery.NewDocumentFromReader(body)
 
@@ -32,23 +32,23 @@ func scrape(updatedURL string, body io.Reader) []string {
 		dataImgSrc, isDataSrcEmpty := imgContent.Attr("data-src")
 
 		if isSrcEmpty {
-			uniqueImgUrls[imgSrc] = true
+			uniqueImgURLs[imgSrc] = true
 		}
 
 		if isDataSrcEmpty {
-			uniqueImgUrls[dataImgSrc] = true
+			uniqueImgURLs[dataImgSrc] = true
 		}
 	})
 
-	for imgURL := range uniqueImgUrls {
+	for imgURL := range uniqueImgURLs {
 		if govalidator.IsURL(imgURL) {
-			imgUrls = append(imgUrls, imgURL)
+			imgURLs = append(imgURLs, imgURL)
 		} else {
-			imgUrls = append(imgUrls, updatedURL+imgURL)
+			imgURLs = append(imgURLs, updatedURL+imgURL)
 		}
 	}
 
-	return imgUrls
+	return imgURLs
 }
 
 func storeImage(imgURL string) io.Reader {

@@ -14,6 +14,11 @@ func InitTerminalMode() {
 	processUserInput()
 }
 
+// InitServerMode -- initiate server mode
+func InitServerMode() {
+	fmt.Println("Listening on port 5000")
+}
+
 func processUserInput() {
 	fmt.Print("Enter url ")
 	scanner := bufio.NewScanner(os.Stdin)
