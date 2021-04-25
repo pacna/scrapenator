@@ -15,13 +15,15 @@ func main() {
 	fmt.Print("Enter url ")
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		updatedURL := utils.UpdateURL(scanner.Text())
+		inputURL := scanner.Text()
 
-		if !govalidator.IsURL(updatedURL) {
-			log.Fatal("Invalid url", updatedURL)
+		if !govalidator.IsURL(inputURL) {
+			log.Fatal("Invalid url", inputURL)
 		}
 
-		response, err := http.Get(updatedURL)
+		response, err := http.Get(inputURL)
+
+		updatedURL := "http://" + response.Request.URL.Host
 
 		if err != nil {
 			log.Fatal("Invalid request")
@@ -35,7 +37,7 @@ func main() {
 
 		imgUrls := utils.Scrape(updatedURL, response.Body)
 
-		// utils.CreateImage(imgUrls)
+		// utils.DownloadImages(imgUrls)
 
 		fmt.Println(imgUrls)
 	}

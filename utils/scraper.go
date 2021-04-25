@@ -1,13 +1,17 @@
 package utils
 
 import (
+	"archive/zip"
 	"bytes"
+	"go-image-scraper/utils/models"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/asaskevich/govalidator"
@@ -48,28 +52,6 @@ func Scrape(updatedURL string, body io.Reader) []string {
 	return imgUrls
 }
 
-// UpdateURL -- updates the user input if it does not have the minimum requirement of a url
-func UpdateURL(userInput string) string {
-	var updatedURL string
-
-	urlSegments := strings.Split(userInput, ".")
-
-	// ex: google.com
-	if len(urlSegments) == 2 {
-		urlSegments[0] = "https://www." + urlSegments[0]
-	}
-
-	// ex: www.google.com
-	if !strings.Contains(urlSegments[0], "http") {
-		urlSegments[0] = "https://" + urlSegments[0]
-
-	}
-
-	updatedURL = strings.Join(urlSegments, ".")
-
-	return updatedURL
-}
-
 func storeImage(imgURL string) io.Reader {
 	var buffer bytes.Buffer
 	response, err := http.Get(imgURL)
@@ -91,21 +73,42 @@ func storeImage(imgURL string) io.Reader {
 	return imageBody
 }
 
-// CreateImage -- creates an image
-func CreateImage(imgUrls []string) {
-	image := storeImage(imgUrls[0])
+// DownloadImages -- download list of images
+func DownloadImages(imgURLs []string) {
+	zipFile, _ := os.Create(strconv.FormatInt(time.Now().Unix(), 10) + ".zip")
+	defer zipFile.Close()
 
-	file, err := os.Create("temp.png")
+	zipWriter := zip.NewWriter(zipFile)
+	defer zipWriter.Close()
 
-	if err != nil {
-		log.Fatal(err)
+	for _, imgURL := range imgURLs {
+		var imgURLInSegments []string = strings.Split(imgURL, "/")
+		var fileName string = imgURLInSegments[len(imgURLInSegments)-1]
+
+		var zipInfo models.ZipInfo
+		zipInfo.ZipFile = zipFile
+		zipInfo.ZipWriter = zipWriter
+		zipInfo.FileName = fileName
+		zipInfo.ImgURL = imgURL
+
+		appendImageToZip(zipInfo)
+	}
+}
+
+func appendImageToZip(zipInfo models.ZipInfo) error {
+	image := storeImage(zipInfo.ImgURL)
+	zipFileHeader := &zip.FileHeader{
+		Name:   zipInfo.FileName,
+		Method: zip.Deflate,
 	}
 
-	defer file.Close()
+	zipFile, _ := zipInfo.ZipWriter.CreateHeader(zipFileHeader)
 
-	_, err = io.Copy(file, image)
+	_, err := io.Copy(zipFile, image)
 
 	if err != nil {
-		log.Fatal("could create image", err)
+		return err
 	}
+
+	return nil
 }
