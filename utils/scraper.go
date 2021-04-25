@@ -17,8 +17,7 @@ import (
 	"github.com/asaskevich/govalidator"
 )
 
-// Scrape -- scapes img urls from html document
-func Scrape(updatedURL string, body io.Reader) []string {
+func scrape(updatedURL string, body io.Reader) []string {
 	var uniqueImgUrls map[string]bool = make(map[string]bool)
 	var imgUrls []string
 
@@ -73,8 +72,7 @@ func storeImage(imgURL string) io.Reader {
 	return imageBody
 }
 
-// DownloadImages -- download list of images
-func DownloadImages(imgURLs []string) {
+func downloadImages(imgURLs []string) error {
 	zipFile, _ := os.Create(strconv.FormatInt(time.Now().Unix(), 10) + ".zip")
 	defer zipFile.Close()
 
@@ -91,8 +89,13 @@ func DownloadImages(imgURLs []string) {
 		zipInfo.FileName = fileName
 		zipInfo.ImgURL = imgURL
 
-		appendImageToZip(zipInfo)
+		err := appendImageToZip(zipInfo)
+		if err != nil {
+			return err
+		}
 	}
+
+	return nil
 }
 
 func appendImageToZip(zipInfo models.ZipInfo) error {
