@@ -2,11 +2,15 @@ package utils
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/asaskevich/govalidator"
+	"github.com/gorilla/mux"
 )
 
 // InitTerminalMode -- initiate terminal mode
@@ -16,7 +20,38 @@ func InitTerminalMode() {
 
 // InitServerMode -- initiate server mode
 func InitServerMode() {
-	fmt.Println("Listening on port 5000")
+	router := setupRouter()
+	http.Handle("/", router)
+
+	server := &http.Server{
+		Handler: router,
+		Addr:    "0.0.0.0:5000",
+		// Good practice: enforce timeouts for servers you create!
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+	fmt.Println("Server is listening on PORT 5000")
+	log.Fatal(server.ListenAndServe())
+}
+
+func setupRouter() *mux.Router {
+	router := mux.NewRouter()
+	router.Methods(http.MethodGet)
+	router.HandleFunc("/scraper", func(writer http.ResponseWriter, request *http.Request) {
+		writer.Header().Set("Content-Type", "application/json")
+
+		type Message struct {
+			Message string `json:"message"`
+		}
+
+		var res Message
+		res.Message = "Hello world"
+		response, _ := json.Marshal(res)
+
+		writer.Write(response)
+	})
+
+	return router
 }
 
 func processUserInput() {
