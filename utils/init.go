@@ -21,7 +21,6 @@ func InitTerminalMode() {
 // InitServerMode -- initiate server mode
 func InitServerMode() {
 	router := setupRouter()
-	http.Handle("/", router)
 
 	server := &http.Server{
 		Handler: router,
@@ -36,21 +35,14 @@ func InitServerMode() {
 
 func setupRouter() *mux.Router {
 	router := mux.NewRouter()
-	router.Methods(http.MethodGet)
 	router.HandleFunc("/scraper", func(writer http.ResponseWriter, request *http.Request) {
 		writer.Header().Set("Content-Type", "application/json")
 
-		type Message struct {
-			Message string `json:"message"`
-		}
-
-		var res Message
-		res.Message = "Hello world"
-		response, _ := json.Marshal(res)
-
+		response, _ := json.Marshal(struct{ Message string }{
+			Message: "Hello World",
+		})
 		writer.Write(response)
 	})
-
 	return router
 }
 
