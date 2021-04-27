@@ -2,8 +2,12 @@ package utils
 
 import (
 	"bufio"
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"go-image-scraper/utils/models"
+	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -35,15 +39,58 @@ func InitServerMode() {
 
 func setupRouter() *mux.Router {
 	router := mux.NewRouter()
-	router.HandleFunc("/scraper", func(writer http.ResponseWriter, request *http.Request) {
-		writer.Header().Set("Content-Type", "application/json")
-
-		response, _ := json.Marshal(struct{ Message string }{
-			Message: "Hello World",
-		})
-		writer.Write(response)
-	})
+	router.HandleFunc("/scraper", scraperHandler)
 	return router
+}
+
+func scraperHandler(writer http.ResponseWriter, request *http.Request) {
+	queryValue := request.URL.Query().Get("url")
+
+	var imgsResponse models.ImgURLResponse
+	if len(queryValue) > 0 {
+		updatedURL, responseBody := processURL(queryValue)
+
+		if responseBody != nil {
+			var imgs []string = scrape(updatedURL, responseBody)
+			imgsResponse.Imgs = imgs
+		} else {
+			emptyResponse := []string{}
+			imgsResponse.Imgs = emptyResponse
+		}
+	} else {
+		emptyResponse := []string{}
+		imgsResponse.Imgs = emptyResponse
+	}
+	writer.Header().Set("Content-Type", "application/json")
+
+	response, _ := json.Marshal(imgsResponse)
+	writer.Write(response)
+}
+
+func processURL(inputURL string) (string, io.Reader) {
+	var buffer bytes.Buffer
+	if !govalidator.IsURL(inputURL) {
+		return "", nil
+	}
+
+	response, err := http.Get(inputURL)
+	updatedURL := fmt.Sprintf("%s://%s", response.Request.URL.Scheme, response.Request.URL.Host)
+
+	if err != nil {
+		return "", nil
+	}
+
+	defer response.Body.Close()
+
+	if response.StatusCode != http.StatusOK {
+		return "", nil
+	}
+
+	buffer.ReadFrom(response.Body)
+
+	responseBody := ioutil.NopCloser(&buffer)
+
+	return updatedURL, responseBody
 }
 
 func processUserInput() {
@@ -57,31 +104,15 @@ func processUserInput() {
 			fmt.Println("Bye | (• ◡•)| (❍ᴥ❍ʋ)")
 			break
 		} else {
-			if !govalidator.IsURL(inputURL) {
-				fmt.Println("Invalid URL ------", inputURL)
+			updatedURL, responseBody := processURL(inputURL)
+
+			if responseBody == nil {
+				fmt.Println("Something went wrong")
 				break
 			}
 
-			response, err := http.Get(inputURL)
-			updatedURL := fmt.Sprintf("%s://%s", response.Request.URL.Scheme, response.Request.URL.Host)
-
-			if err != nil {
-				fmt.Println(err)
-				break
-			}
-
-			defer response.Body.Close()
-
-			if response.StatusCode != http.StatusOK {
-				fmt.Println("Status is not returning a success code", response.StatusCode, response.Status)
-				break
-			}
-
-			imgURLs := scrape(updatedURL, response.Body)
-
-			// downloadImages(imgURLs)
-
-			fmt.Println(imgURLs)
+			imgURLs := scrape(updatedURL, responseBody)
+			downloadImages(imgURLs)
 			fmt.Print("Enter another url or press q to QUIT ")
 		}
 
