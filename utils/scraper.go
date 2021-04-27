@@ -43,7 +43,9 @@ func scrape(updatedURL string, body io.Reader) []string {
 	for imgURL := range uniqueImgURLs {
 		if govalidator.IsURL(imgURL) {
 			imgURLs = append(imgURLs, imgURL)
-		} else {
+		}
+
+		if !govalidator.IsURL(imgURL) {
 			imgURLs = append(imgURLs, updatedURL+imgURL)
 		}
 	}

@@ -53,14 +53,19 @@ func scraperHandler(writer http.ResponseWriter, request *http.Request) {
 		if responseBody != nil {
 			var imgs []string = scrape(updatedURL, responseBody)
 			imgsResponse.Imgs = imgs
-		} else {
+		}
+
+		if responseBody == nil {
 			emptyResponse := []string{}
 			imgsResponse.Imgs = emptyResponse
 		}
-	} else {
+	}
+
+	if len(queryValue) == 0 {
 		emptyResponse := []string{}
 		imgsResponse.Imgs = emptyResponse
 	}
+
 	writer.Header().Set("Content-Type", "application/json")
 
 	response, _ := json.Marshal(imgsResponse)
@@ -103,7 +108,9 @@ func processUserInput() {
 		if inputURL == "q" {
 			fmt.Println("Bye | (• ◡•)| (❍ᴥ❍ʋ)")
 			break
-		} else {
+		}
+
+		if inputURL != "q" {
 			updatedURL, responseBody := processURL(inputURL)
 
 			if responseBody == nil {
