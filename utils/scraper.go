@@ -3,12 +3,14 @@ package utils
 import (
 	"archive/zip"
 	"bytes"
+	"fmt"
 	"go-image-scraper/utils/models"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -81,10 +83,9 @@ func downloadImages(imgURLs []string) error {
 	zipWriter := zip.NewWriter(zipFile)
 	defer zipWriter.Close()
 
-	for _, imgURL := range imgURLs {
+	for index, imgURL := range imgURLs {
 		var imgURLInSegments []string = strings.Split(imgURL, "/")
-		var fileName string = imgURLInSegments[len(imgURLInSegments)-1]
-
+		var fileName string = createFileName(imgURLInSegments[len(imgURLInSegments)-1], index)
 		var zipInfo models.ZipInfo
 		zipInfo.ZipFile = zipFile
 		zipInfo.ZipWriter = zipWriter
@@ -98,6 +99,18 @@ func downloadImages(imgURLs []string) error {
 	}
 
 	return nil
+}
+
+func createFileName(fileNameFromURL string, index int) string {
+	reg, _ := regexp.Compile(`[\d?]+`)
+	fileNameFromURLSegments := strings.Split(fileNameFromURL, ".")
+
+	cleanFileName := reg.ReplaceAllString(fileNameFromURLSegments[0], "")
+	cleanFileExtension := reg.ReplaceAllString(fileNameFromURLSegments[1], "")
+
+	fileName := fmt.Sprintf("%s_%d.%s", cleanFileName, index, cleanFileExtension)
+
+	return fileName
 }
 
 func appendImageToZip(zipInfo models.ZipInfo) error {
