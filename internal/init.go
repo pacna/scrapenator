@@ -1,11 +1,12 @@
-package utils
+package internal
 
 import (
 	"bufio"
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"go-image-scraper/utils/models"
+	"go-image-scraper/internal/models"
+	"go-image-scraper/pkg"
 	"io"
 	"io/ioutil"
 	"log"
@@ -51,7 +52,7 @@ func scraperHandler(writer http.ResponseWriter, request *http.Request) {
 		updatedURL, responseBody := processURL(queryValue)
 
 		if responseBody != nil {
-			var imgs []string = scrape(updatedURL, responseBody)
+			var imgs []string = pkg.Scrape(updatedURL, responseBody)
 			imgsResponse.Imgs = imgs
 		}
 
@@ -118,8 +119,8 @@ func processUserInput() {
 				break
 			}
 
-			imgURLs := scrape(updatedURL, responseBody)
-			downloadImages(imgURLs)
+			imgURLs := pkg.Scrape(updatedURL, responseBody)
+			pkg.DownloadImages(imgURLs)
 			fmt.Print("Enter another url or press q to QUIT ")
 		}
 

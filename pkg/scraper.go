@@ -1,10 +1,10 @@
-package utils
+package pkg
 
 import (
 	"archive/zip"
 	"bytes"
 	"fmt"
-	"go-image-scraper/utils/models"
+	"go-image-scraper/internal/models"
 	"io"
 	"io/ioutil"
 	"log"
@@ -19,7 +19,7 @@ import (
 	"github.com/asaskevich/govalidator"
 )
 
-func scrape(updatedURL string, body io.Reader) []string {
+func Scrape(updatedURL string, body io.Reader) []string {
 	var uniqueImgURLs map[string]bool = make(map[string]bool)
 	var imgURLs []string
 
@@ -76,7 +76,7 @@ func storeImage(imgURL string) io.Reader {
 	return imageBody
 }
 
-func downloadImages(imgURLs []string) error {
+func DownloadImages(imgURLs []string) error {
 	zipFile, _ := os.Create(strconv.FormatInt(time.Now().Unix(), 10) + ".zip")
 	defer zipFile.Close()
 

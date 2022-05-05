@@ -1,7 +1,7 @@
 package main
 
 import (
-	"go-image-scraper/utils"
+	"go-image-scraper/internal"
 	"os"
 )
 
@@ -23,13 +23,13 @@ func setMode(args []string) {
 
 		switch mode {
 		case TERMINAL:
-			utils.InitTerminalMode()
+			internal.InitTerminalMode()
 		case SERVER:
-			utils.InitServerMode()
+			internal.InitServerMode()
 		default:
-			utils.InitTerminalMode()
+			internal.InitTerminalMode()
 		}
 	} else {
-		utils.InitTerminalMode()
+		internal.InitTerminalMode()
 	}
 }
