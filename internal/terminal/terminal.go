@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"go-image-scraper/pkg/scraper"
+	"go-image-scraper/pkg/utility"
 	"os"
 )
 
@@ -29,16 +30,14 @@ func processUserInput() {
 			updatedURL := scraper.GetUpdatedURL(inputURL)
 			responseBody := scraper.GetResponseFromURL(inputURL)
 			
-			if (len(updatedURL) == 0 || responseBody == nil) {
+			if (utility.IsStringEmpty(updatedURL) || responseBody == nil) {
 				fmt.Println("Unable to process URL")
 				break;
-
 			}
 
 			imgURLs := scraper.Scrape(updatedURL, responseBody)
 			scraper.DownloadImages(imgURLs)
 			fmt.Print("Enter another url or press q to QUIT ")
 		}
-
 	}
 }

@@ -24,18 +24,18 @@ http://localhost:5000/scraper?url=https://www.google.com/
 
 ### Prerequisites
 
-- [golang](https://golang.org/dl/)
-- [docker](https://docs.docker.com/get-docker/) (optional)
-- [docker-compose](https://docs.docker.com/compose/install/) (optional)
+-   [golang](https://golang.org/dl/)
+-   [docker](https://docs.docker.com/get-docker/) (optional)
+-   [docker-compose](https://docs.docker.com/compose/install/) (optional)
 
-### How to run
+### How to run locally
 
 ```bash
-$ make
-# defaults to TERMINAL MODE
-$ ./main
-# passing in 1 will enable SERVER MODE
-$ ./main 1
+# terminal mode
+$ make terminal
+
+# server mode
+$ make server
 ```
 
 ### How to run using docker

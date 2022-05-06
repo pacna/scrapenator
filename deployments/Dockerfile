@@ -3,8 +3,6 @@ FROM golang:1.18
 WORKDIR '/go-image-scraper'
 COPY . .
 
-RUN make
+RUN make build
 
-ENTRYPOINT ["./main"]
-# SERVER_MODE = 1
-CMD ["1"] 
+ENTRYPOINT ["./server"]

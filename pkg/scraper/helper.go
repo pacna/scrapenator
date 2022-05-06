@@ -1,6 +1,8 @@
 package scraper
 
-import "archive/zip"
+import (
+	"archive/zip"
+)
 
 type ZipInfoReceiver struct {
 	fileName string

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"go-image-scraper/pkg/scraper"
+	"go-image-scraper/pkg/utility"
 	"log"
 	"net/http"
 	"time"
@@ -34,35 +35,35 @@ func setupRouter() *mux.Router {
 func scraperHandler(writer http.ResponseWriter, request *http.Request) {
 	queryValue := request.URL.Query().Get("url")
 
-	var imgsResponse ImgURLResponse
-	if len(queryValue) > 0 {
+	var imgCollection ImgURLCollection
+	if !utility.IsStringEmpty(queryValue) {
 			
 		updatedURL := scraper.GetUpdatedURL(queryValue)
 		responseBody := scraper.GetResponseFromURL(queryValue)
 		
-		if (len(updatedURL) == 0 || responseBody == nil) {
-			panic("Unable to process URL")
-
+		if (utility.IsStringEmpty(updatedURL) || responseBody == nil) {
+			fmt.Println("Unable to process URL")
+			return
 		}
 
 		if responseBody != nil {
 			var imgs []string = scraper.Scrape(updatedURL, responseBody)
-			imgsResponse.Imgs = imgs
+			imgCollection.Imgs = imgs
 		}
 
 		if responseBody == nil {
 			emptyResponse := []string{}
-			imgsResponse.Imgs = emptyResponse
+			imgCollection.Imgs = emptyResponse
 		}
 	}
 
-	if len(queryValue) == 0 {
+	if utility.IsStringEmpty(queryValue) {
 		emptyResponse := []string{}
-		imgsResponse.Imgs = emptyResponse
+		imgCollection.Imgs = emptyResponse
 	}
 
 	writer.Header().Set("Content-Type", "application/json")
 
-	response, _ := json.Marshal(imgsResponse)
+	response, _ := json.Marshal(imgCollection)
 	writer.Write(response)
 }
