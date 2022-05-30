@@ -1,7 +1,0 @@
-version: "2"
-
-services:
-  go-image-scraper:
-    build: .
-    ports:
-      - 5000:5000
