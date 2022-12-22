@@ -1,6 +1,6 @@
 package main
 
-import "go-image-scraper/internal/server"
+import "goscrape/internal/server"
 
 func main() {
 	server.InitServerMode()

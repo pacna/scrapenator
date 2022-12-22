@@ -1,6 +1,6 @@
-# GO Image Scraper
+# Goscrape
 
-Scrape images off of a web page.
+A web scraper that scrape images off of a web page.
 
 ### TERMINAL MODE
 
@@ -24,9 +24,9 @@ http://localhost:5000/scraper?url=https://www.google.com/
 
 ### Prerequisites
 
--   [golang](https://golang.org/dl/)
--   [docker](https://docs.docker.com/get-docker/) (optional)
--   [docker-compose](https://docs.docker.com/compose/install/) (optional)
+-   [Golang](https://golang.org/dl/)
+-   [Docker](https://docs.docker.com/get-docker/) (optional)
+-   [Docker Compose](https://docs.docker.com/compose/install/) (optional)
 
 ### How to run locally
 
@@ -38,10 +38,17 @@ $ make terminal
 $ make server
 ```
 
-### How to run using docker
+### How to run using docker (Optional)
 
 ```bash
+# goto the deployments directory
+$ cd deployments
+
+# run cmd
 $ docker-compose up --build
+
+# or use Make cmd
+$ make docker
 ```
 
 ##### note -- docker only runs in SERVER MODE

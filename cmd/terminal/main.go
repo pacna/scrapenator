@@ -1,7 +1,7 @@
 package main
 
 import (
-	"go-image-scraper/internal/terminal"
+	"goscrape/internal/terminal"
 )
 
 func main() {

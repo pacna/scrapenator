@@ -3,8 +3,8 @@ package terminal
 import (
 	"bufio"
 	"fmt"
-	"go-image-scraper/pkg/scraper"
-	"go-image-scraper/pkg/utility"
+	"goscrape/pkg/scraper"
+	"goscrape/pkg/utility"
 	"os"
 )
 

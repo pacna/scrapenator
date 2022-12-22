@@ -3,8 +3,8 @@ package server
 import (
 	"encoding/json"
 	"fmt"
-	"go-image-scraper/pkg/scraper"
-	"go-image-scraper/pkg/utility"
+	"goscrape/pkg/scraper"
+	"goscrape/pkg/utility"
 	"log"
 	"net/http"
 	"time"

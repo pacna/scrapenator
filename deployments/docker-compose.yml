@@ -1,7 +1,7 @@
 version: "2"
 
 services:
-    go-image-scraper:
+    goscrape:
         build:
             context: ../
             dockerfile: ./deployments/Dockerfile

@@ -1,6 +1,6 @@
-FROM golang:1.18
+FROM golang:1.19
 
-WORKDIR '/go-image-scraper'
+WORKDIR '/goscrape'
 COPY . .
 
 RUN make build
