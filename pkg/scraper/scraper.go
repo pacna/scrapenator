@@ -18,6 +18,12 @@ import (
 	"github.com/asaskevich/govalidator"
 )
 
+type ZipInfoGetter interface {
+	getFileName() string
+	getImgUrl() string
+	getZipWriter() *zip.Writer
+}
+
 func Scrape(updatedURL string, body io.Reader) []string {
 	var uniqueImgURLs map[string]bool = make(map[string]bool)
 	var imgURLs []string

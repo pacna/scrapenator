@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	terminal.InitTerminalMode()
+	terminal.New()
 }

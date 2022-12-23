@@ -3,5 +3,5 @@ package main
 import "goscrape/internal/server"
 
 func main() {
-	server.InitServerMode()
+	server.New()
 }

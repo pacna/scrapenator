@@ -8,8 +8,8 @@ import (
 	"os"
 )
 
-// InitTerminalMode -- initiate terminal mode
-func InitTerminalMode() {
+// New -- initiate terminal mode
+func New() {
 	processUserInput()
 }
 

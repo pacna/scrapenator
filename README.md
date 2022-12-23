@@ -17,7 +17,7 @@ Bye | (• ◡•)| (❍ᴥ❍ʋ)
 A basic service that returns a list of images in the response. Runs locally on http://localhost:5000/.
 
 ```
-http://localhost:5000/scraper?url=https://www.google.com/
+http://localhost:5000/scrape?url=https://www.google.com/
 
 {"imgs":["https://www.google.com/images/branding/googlelogo/1x/googlelogo_white_background_color_272x92dp.png"]}
 ```

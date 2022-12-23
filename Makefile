@@ -4,7 +4,7 @@ terminal:
 server:
 	go run ./cmd/server
 
-build:
+build-server:
 	go build -o server ./cmd/server/
 
 docker:
