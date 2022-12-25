@@ -3,13 +3,13 @@ package terminal
 import (
 	"bufio"
 	"fmt"
-	"go-image-scraper/pkg/scraper"
-	"go-image-scraper/pkg/utility"
+	"goscrape/pkg/scraper"
+	"goscrape/pkg/utility"
 	"os"
 )
 
-// InitTerminalMode -- initiate terminal mode
-func InitTerminalMode() {
+// New -- initiate terminal mode
+func New() {
 	processUserInput()
 }
 

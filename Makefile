@@ -4,7 +4,10 @@ terminal:
 server:
 	go run ./cmd/server
 
-build:
+build-server:
 	go build -o server ./cmd/server/
+
+docker:
+	docker-compose -f ./deployments/docker-compose.yml up --build
 
 all: build

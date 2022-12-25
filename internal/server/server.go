@@ -3,8 +3,8 @@ package server
 import (
 	"encoding/json"
 	"fmt"
-	"go-image-scraper/pkg/scraper"
-	"go-image-scraper/pkg/utility"
+	"goscrape/pkg/scraper"
+	"goscrape/pkg/utility"
 	"log"
 	"net/http"
 	"time"
@@ -12,7 +12,13 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func InitServerMode() {
+// ImgURLCollection -- response model for returning a list of images from a webpage
+type ImgURLCollection struct {
+	Imgs []string `json:"imgs"`
+}
+
+// New -- initiate server mode
+func New() {
 	router := setupRouter()
 
 	server := &http.Server{
@@ -28,11 +34,11 @@ func InitServerMode() {
 
 func setupRouter() *mux.Router {
 	router := mux.NewRouter()
-	router.HandleFunc("/scraper", scraperHandler)
+	router.HandleFunc("/scrape", scrapeHandler)
 	return router
 }
 
-func scraperHandler(writer http.ResponseWriter, request *http.Request) {
+func scrapeHandler(writer http.ResponseWriter, request *http.Request) {
 	queryValue := request.URL.Query().Get("url")
 
 	var imgCollection ImgURLCollection
