@@ -1,1 +1,5 @@
-main
+# server
+server
+
+# .zip
+*.zip

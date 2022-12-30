@@ -1,10 +1,10 @@
-# GO Image Scraper
+# Scrapenator
 
-Scrape images off of a web page.
+Scrapenator is a web scraper designed to extract images from web pages.
 
 ### TERMINAL MODE
 
-Download the images in a zip file.
+In terminal mode, Scrapenator downloads images and packs them into a zip file.
 
 ```bash
 Enter url https://www.google.com/
@@ -14,34 +14,49 @@ Bye | (• ◡•)| (❍ᴥ❍ʋ)
 
 ### SERVER MODE
 
-A basic service that returns a list of images in the response. Runs locally on http://localhost:5000/.
+In server mode, Scrapenator acts as a basic service that returns a list of images in the response. It runs locally at http://localhost:5000/.
 
-```
-http://localhost:5000/scraper?url=https://www.google.com/
-
-{"imgs":["https://www.google.com/images/branding/googlelogo/1x/googlelogo_white_background_color_272x92dp.png"]}
+```http
+http://localhost:5000/scrape?url=https://www.google.com/
 ```
 
-### Prerequisites
+```json
+{
+    "imgs": [
+        "https://www.google.com/images/branding/googlelogo/1x/googlelogo_white_background_color_272x92dp.png"
+    ]
+}
+```
 
-- [golang](https://golang.org/dl/)
-- [docker](https://docs.docker.com/get-docker/) (optional)
-- [docker-compose](https://docs.docker.com/compose/install/) (optional)
+## Prerequisites
 
-### How to run
+Before using Scrapenator, make sure you have the following tools and components installed:
+
+-   [Golang](https://golang.org/dl/)
+-   [Make](https://www.gnu.org/software/make/)
+-   [Docker](https://docs.docker.com/get-docker/) (optional)
+-   [Docker Compose](https://docs.docker.com/compose/install/) (optional)
+
+### How to Run Locally
+
+To run Scrapenator in terminal mode, use the following command:
 
 ```bash
-$ make
-# defaults to TERMINAL MODE
-$ ./main
-# passing in 1 will enable SERVER MODE
-$ ./main 1
+$ make terminal
 ```
 
-### How to run using docker
+To run Scrapenator in server mode, execute the following command:
 
 ```bash
-$ docker-compose up --build
+$ make server
 ```
 
-##### note -- docker only runs in SERVER MODE
+### How to Run Using Docker (Optional)
+
+To utilize Docker for Scrapenator, you can easily deploy it using the following command:
+
+```bash
+$ make docker
+```
+
+**Note:** Docker only runs in [SERVER MODE](#server-mode).
