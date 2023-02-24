@@ -1,7 +1,7 @@
 package main
 
 import (
-	"goscrape/internal/terminal"
+	"github.com/pacna/goscrape/internal/terminal"
 )
 
 func main() {

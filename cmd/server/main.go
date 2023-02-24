@@ -1,6 +1,6 @@
 package main
 
-import "goscrape/internal/server"
+import "github.com/pacna/goscrape/internal/server"
 
 func main() {
 	server.New()

@@ -3,11 +3,12 @@ package server
 import (
 	"encoding/json"
 	"fmt"
-	"goscrape/pkg/scraper"
-	"goscrape/pkg/utility"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/pacna/goscrape/pkg/scraper"
+	"github.com/pacna/goscrape/pkg/utility"
 
 	"github.com/gorilla/mux"
 )

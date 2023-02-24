@@ -3,9 +3,10 @@ package terminal
 import (
 	"bufio"
 	"fmt"
-	"goscrape/pkg/scraper"
-	"goscrape/pkg/utility"
 	"os"
+
+	"github.com/pacna/goscrape/pkg/scraper"
+	"github.com/pacna/goscrape/pkg/utility"
 )
 
 // New -- initiate terminal mode

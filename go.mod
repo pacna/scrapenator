@@ -1,4 +1,4 @@
-module goscrape
+module github.com/pacna/goscrape
 
 go 1.19
 
