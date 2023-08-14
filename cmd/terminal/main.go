@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/pacna/goscrape/internal/terminal"
+	"github.com/pacna/scrapenator/internal/terminal"
 )
 
 func main() {

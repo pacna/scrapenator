@@ -1,7 +1,7 @@
 version: "2"
 
 services:
-    goscrape:
+    scrapenator:
         build:
             context: ../
             dockerfile: ./deployments/Dockerfile

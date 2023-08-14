@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/pacna/goscrape/pkg/scraper"
-	"github.com/pacna/goscrape/pkg/utility"
+	"github.com/pacna/scrapenator/pkg/scraper"
+	"github.com/pacna/scrapenator/pkg/utility"
 
 	"github.com/gorilla/mux"
 )

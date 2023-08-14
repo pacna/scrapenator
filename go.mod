@@ -1,10 +1,10 @@
-module github.com/pacna/goscrape
+module github.com/pacna/scrapenator
 
-go 1.19
+go 1.21.0
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
+	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2
 	github.com/gorilla/mux v1.8.0
 )
 

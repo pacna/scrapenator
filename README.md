@@ -1,10 +1,10 @@
-# Goscrape
+# Scrapenator
 
-A web scraper that scrape images off of a web page.
+Scrapenator is a web scraper designed to extract images from web pages. It provides both terminal and server modes to download images or return a list of images in the response.
 
 ### TERMINAL MODE
 
-Download the images in a zip file.
+In terminal mode, Scrapenator downloads images and packs them into a zip file.
 
 ```bash
 Enter url https://www.google.com/
@@ -14,41 +14,60 @@ Bye | (• ◡•)| (❍ᴥ❍ʋ)
 
 ### SERVER MODE
 
-A basic service that returns a list of images in the response. Runs locally on http://localhost:5000/.
+In server mode, Scrapenator acts as a basic service that returns a list of images in the response. It runs locally at http://localhost:5000/.
 
-```
+```http
 http://localhost:5000/scrape?url=https://www.google.com/
-
-{"imgs":["https://www.google.com/images/branding/googlelogo/1x/googlelogo_white_background_color_272x92dp.png"]}
 ```
 
-### Prerequisites
+```json
+{
+    "imgs": [
+        "https://www.google.com/images/branding/googlelogo/1x/googlelogo_white_background_color_272x92dp.png"
+    ]
+}
+```
+
+## Prerequisites
+
+Before using Scrapenator, make sure you have the following tools and components installed:
 
 -   [Golang](https://golang.org/dl/)
 -   [Docker](https://docs.docker.com/get-docker/) (optional)
 -   [Docker Compose](https://docs.docker.com/compose/install/) (optional)
 
-### How to run locally
+### How to Run Locally
+
+To run in terminal mode:
 
 ```bash
-# terminal mode
 $ make terminal
+```
 
-# server mode
+To run in server mode:
+
+```bash
 $ make server
 ```
 
-### How to run using docker (Optional)
+### How to Run Using Docker (Optional)
+
+Navigate to the deployments directory:
 
 ```bash
-# goto the deployments directory
 $ cd deployments
+```
 
-# run cmd
+Run the following command:
+
+```bash
 $ docker-compose up --build
+```
 
-# or use Make cmd
+Or you can use the Make command:
+
+```bash
 $ make docker
 ```
 
-##### note -- docker only runs in SERVER MODE
+**Note:** Docker only runs in [SERVER MODE](#server-mode).

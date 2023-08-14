@@ -1,8 +1,8 @@
-FROM golang:1.19
+FROM golang:1.21
 
-WORKDIR '/goscrape'
+WORKDIR '/scrapenator'
 COPY . .
 
-RUN make build-server
+RUN make build_server
 
 ENTRYPOINT ["./server"]
