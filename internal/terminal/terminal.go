@@ -5,11 +5,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/pacna/goscrape/pkg/scraper"
-	"github.com/pacna/goscrape/pkg/utility"
+	"github.com/pacna/scrapenator/pkg/scraper"
+	"github.com/pacna/scrapenator/pkg/utility"
 )
 
-// New -- initiate terminal mode
 func New() {
 	processUserInput()
 }

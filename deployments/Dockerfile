@@ -1,6 +1,6 @@
 FROM golang:1.19
 
-WORKDIR '/goscrape'
+WORKDIR '/scrapenator'
 COPY . .
 
 RUN make build-server

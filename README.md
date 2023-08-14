@@ -1,4 +1,4 @@
-# Goscrape
+# Scrapenator
 
 A web scraper that scrape images off of a web page.
 

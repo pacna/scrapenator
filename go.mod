@@ -1,4 +1,4 @@
-module github.com/pacna/goscrape
+module github.com/pacna/scrapenator
 
 go 1.19
 
