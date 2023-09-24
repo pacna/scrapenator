@@ -3,27 +3,29 @@
 ## ----------------------------------------------------------------------
 ##
 
-.PHONY:terminal
-terminal: ## run the app in terminal mode
+PROG = $(shell basename `git rev-parse --show-toplevel`)
+
+.PHONY:build
+build: ## Build the application 
 ##
-	go run ./cmd/terminal
+	go build -o $(PROG)
+
+.PHONY:terminal
+terminal: ## Run the application in terminal mode
+##
+	go run . -mode=terminal
 
 .PHONY:server
-server: ## run the app in server mode
+server: ## Run the application in server mode
 ##
-	go run ./cmd/server
-
-.PHONY:build_server
-build_server: ## build binary for server mode
-##
-	go build -o server ./cmd/server/
+	go run . -mode=server
 
 .PHONY:docker
-docker: ## run in docker container
+docker: ## Run the application in a Docker container
 ##
 	docker-compose -f ./deployments/docker-compose.yml up --build
 
 .PHONY:help
-help: ## Show this help
+help: ## Show the help message with target descriptions
 ##
 	@sed -ne '/@sed/!s/##//p' $(MAKEFILE_LIST)

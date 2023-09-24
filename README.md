@@ -1,6 +1,6 @@
 # Scrapenator
 
-Scrapenator is a web scraper designed to extract images from web pages. It provides both terminal and server modes to download images or return a list of images in the response.
+Scrapenator is a web scraper designed to extract images from web pages.
 
 ### TERMINAL MODE
 
@@ -33,18 +33,19 @@ http://localhost:5000/scrape?url=https://www.google.com/
 Before using Scrapenator, make sure you have the following tools and components installed:
 
 -   [Golang](https://golang.org/dl/)
+-   [Make](https://www.gnu.org/software/make/)
 -   [Docker](https://docs.docker.com/get-docker/) (optional)
 -   [Docker Compose](https://docs.docker.com/compose/install/) (optional)
 
 ### How to Run Locally
 
-To run in terminal mode:
+To run Scrapenator in terminal mode, use the following command:
 
 ```bash
 $ make terminal
 ```
 
-To run in server mode:
+To run Scrapenator in server mode, execute the following command:
 
 ```bash
 $ make server
@@ -52,19 +53,7 @@ $ make server
 
 ### How to Run Using Docker (Optional)
 
-Navigate to the deployments directory:
-
-```bash
-$ cd deployments
-```
-
-Run the following command:
-
-```bash
-$ docker-compose up --build
-```
-
-Or you can use the Make command:
+To utilize Docker for Scrapenator, you can easily deploy it using the following command:
 
 ```bash
 $ make docker
