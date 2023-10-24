@@ -2,30 +2,33 @@
 ## The purpose of this Makefile is to simplify common development tasks.
 ## ----------------------------------------------------------------------
 ##
+## Usage:
+##   - make build        : Build the application
+##   - make terminal     : Run the application in terminal mode
+##   - make server       : Run the application in server mode
+##   - make docker       : Run the application in a docker container
+##   - make help         : Show available commands and descriptions
+##
+
 
 PROG = $(shell basename `git rev-parse --show-toplevel`)
 
 .PHONY:build
-build: ## Build the application 
-##
+build:
 	go build -o $(PROG)
 
 .PHONY:terminal
-terminal: ## Run the application in terminal mode
-##
+terminal:
 	go run . -mode=terminal
 
 .PHONY:server
-server: ## Run the application in server mode
-##
+server:
 	go run . -mode=server
 
 .PHONY:docker
-docker: ## Run the application in a Docker container
-##
+docker:
 	docker-compose -f ./deployments/docker-compose.yml up --build
 
 .PHONY:help
-help: ## Show the help message with target descriptions
-##
+help:
 	@sed -ne '/@sed/!s/##//p' $(MAKEFILE_LIST)
