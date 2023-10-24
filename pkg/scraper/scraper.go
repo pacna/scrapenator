@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -76,7 +75,7 @@ func storeImage(imgURL string) io.Reader {
 
 	buffer.ReadFrom(response.Body)
 
-	imageBody := ioutil.NopCloser(&buffer)
+	imageBody := io.NopCloser(&buffer)
 
 	return imageBody
 }
@@ -140,7 +139,7 @@ func GetResponseFromURL(inputURL string) io.Reader {
 
 	buffer.ReadFrom(response.Body)
 
-	responseBody := ioutil.NopCloser(&buffer)
+	responseBody := io.NopCloser(&buffer)
 
 	return responseBody
 }
