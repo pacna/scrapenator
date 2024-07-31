@@ -5,8 +5,6 @@
 ## Usage:
 ##   - make build        : Build the application
 ##   - make terminal     : Run the application in terminal mode
-##   - make server       : Run the application in server mode
-##   - make docker       : Run the application in a docker container
 ##   - make help         : Show available commands and descriptions
 ##
 
@@ -20,14 +18,6 @@ build:
 .PHONY:terminal
 terminal:
 	go run . -mode=terminal
-
-.PHONY:server
-server:
-	go run . -mode=server
-
-.PHONY:docker
-docker:
-	docker-compose -f ./deployments/docker-compose.yml up --build
 
 .PHONY:help
 help:
