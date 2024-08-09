@@ -1,4 +1,4 @@
-module github.com/pacna/scrapenator
+module github.com/pacna/goober
 
 go 1.22.1
 

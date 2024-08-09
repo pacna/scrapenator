@@ -1,12 +1,12 @@
-package terminal
+package shell
 
 import (
 	"bufio"
 	"fmt"
 	"os"
 
-	"github.com/pacna/scrapenator/pkg/scraper"
-	"github.com/pacna/scrapenator/pkg/utility"
+	"github.com/pacna/goober/internal/scraper"
+	"github.com/pacna/goober/internal/utility"
 )
 
 func New() {
